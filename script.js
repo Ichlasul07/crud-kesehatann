@@ -1,55 +1,67 @@
-let dataPasien = JSON.parse(localStorage.getItem("pasien")) || [];
-let editIndex = -1;
+// Ambil elemen
+const form = document.getElementById('pasienForm');
+const tabelBody = document.querySelector('#tabelPasien tbody');
+let pasienData = JSON.parse(localStorage.getItem('pasienData')) || [];
 
-function tampilData() {
-    let tabel = document.getElementById("tabelPasien");
-    tabel.innerHTML = "";
-
-    dataPasien.forEach((pasien, index) => {
-        tabel.innerHTML += `
-        <tr>
-            <td>${pasien.nama}</td>
-            <td>${pasien.umur}</td>
-            <td>${pasien.diagnosa}</td>
+// Render tabel
+function renderTable() {
+    tabelBody.innerHTML = '';
+    pasienData.forEach((p, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${p.nama}</td>
+            <td>${p.umur}</td>
+            <td>${p.diagnosa}</td>
             <td>
-                <button onclick="editData(${index})">Edit</button>
-                <button onclick="hapusData(${index})">Hapus</button>
+                <button onclick="editData(${i})">Edit</button>
+                <button onclick="hapusData(${i})">Hapus</button>
             </td>
-        </tr>`;
+        `;
+        tabelBody.appendChild(row);
     });
 }
 
-document.getElementById("formPasien").addEventListener("submit", function(e) {
+// Tambah / Edit data
+form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const indexEdit = document.getElementById('indexEdit').value;
+    const nama = document.getElementById('nama').value;
+    const umur = document.getElementById('umur').value;
+    const diagnosa = document.getElementById('diagnosa').value;
 
-    let nama = document.getElementById("nama").value;
-    let umur = document.getElementById("umur").value;
-    let diagnosa = document.getElementById("diagnosa").value;
+    const data = { nama, umur, diagnosa };
 
-    if (editIndex === -1) {
-        dataPasien.push({ nama, umur, diagnosa });
+    if(indexEdit === '') {
+        // Tambah
+        pasienData.push(data);
     } else {
-        dataPasien[editIndex] = { nama, umur, diagnosa };
-        editIndex = -1;
+        // Edit
+        pasienData[indexEdit] = data;
     }
 
-    localStorage.setItem("pasien", JSON.stringify(dataPasien));
-    tampilData();
-    this.reset();
+    localStorage.setItem('pasienData', JSON.stringify(pasienData));
+    form.reset();
+    document.getElementById('indexEdit').value = '';
+    renderTable();
 });
 
-function editData(index) {
-    let pasien = dataPasien[index];
-    document.getElementById("nama").value = pasien.nama;
-    document.getElementById("umur").value = pasien.umur;
-    document.getElementById("diagnosa").value = pasien.diagnosa;
-    editIndex = index;
+// Edit
+function editData(i) {
+    document.getElementById('indexEdit').value = i;
+    document.getElementById('nama').value = pasienData[i].nama;
+    document.getElementById('umur').value = pasienData[i].umur;
+    document.getElementById('diagnosa').value = pasienData[i].diagnosa;
 }
 
-function hapusData(index) {
-    dataPasien.splice(index, 1);
-    localStorage.setItem("pasien", JSON.stringify(dataPasien));
-    tampilData();
+// Hapus
+function hapusData(i) {
+    if(confirm('Hapus pasien ini?')) {
+        pasienData.splice(i,1);
+        localStorage.setItem('pasienData', JSON.stringify(pasienData));
+        renderTable();
+    }
 }
 
-tampilData();
+// Inisialisasi
+renderTable();

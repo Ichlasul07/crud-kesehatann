@@ -1,34 +1,38 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Data Pasien</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>CRUD Data Pasien</h1>
 
-<h2>Data Pasien</h2>
-<h3>Test CI/CD Auto Deploy </h3>
+    <form id="pasienForm">
+        <input type="hidden" id="indexEdit">
+        <input type="text" id="nama" placeholder="Nama Pasien" required>
+        <input type="number" id="umur" placeholder="Umur" required>
+        <input type="text" id="diagnosa" placeholder="Diagnosa" required>
+        <button type="submit">Simpan</button>
+    </form>
 
-<form id="formPasien">
-    <input type="text" id="nama" placeholder="Nama" required>
-    <input type="number" id="umur" placeholder="Umur" required>
-    <input type="text" id="diagnosa" placeholder="Diagnosa" required>
-    <button type="submit">Simpan</button>
-</form>
+    <h2>Daftar Pasien</h2>
+    <table border="1" id="tabelPasien">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Umur</th>
+                <th>Diagnosa</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data pasien muncul di sini -->
+        </tbody>
+    </table>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Nama</th>
-            <th>Umur</th>
-            <th>Diagnosa</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody id="tabelPasien"></tbody>
-</table>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

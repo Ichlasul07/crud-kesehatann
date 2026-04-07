@@ -1,12 +1,10 @@
 body {
-    font-family: Arial;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
 }
 
-input {
+form input, form button {
     margin: 5px;
-}
-
-button {
-    cursor: pointer;
+    padding: 5px;
 }
