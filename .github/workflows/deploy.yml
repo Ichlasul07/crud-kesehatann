@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy ke EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@IP_PUBLIC << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@3.84.128.87 << 'EOF'
         cd /var/www/crud-kesehatann
         git pull origin main
         sudo systemctl restart nginx
